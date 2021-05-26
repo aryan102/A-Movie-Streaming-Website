@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <title>Email Validation</title>
+ <meta charset="utf-8">
+ <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.css">
+ <meta charset="UTF-8">
+ <meta http-equiv="X-UA-Compatible" content="IE=edge">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0,maximumscale=1">
+ <title>Login</title>
+ <link rel="stylesheet" href="../static/style.css">
+ <script>
+ function toggleSignup() {
+ document.getElementById("logintoggle").style.backgroundColor = "#fff";
+ document.getElementById("login-toggle").style.color
+= "#222";
+
+document.getElementById("signuptoggle").style.background
+Color = "#57b846";
+
+ document.getElementById("signuptoggle").style.color = "#fff";
+ document.getElementById("login-form").style.display
+= "none";
+ document.getElementById("signupform").style.display = "block";
+ }
+ function toggleLogin() {
+
+document.getElementById("logintoggle").style.backgroundCo
+lor = "#57B846";
+ document.getElementById("login-toggle").style.color
+= "#fff";
+
+document.getElementById("signuptoggle").style.background
+Color = "#fff";
+ document.getElementById("signuptoggle").style.color = "#222";
+ document.getElementById("signupform").style.display = "none";
+ document.getElementById("login-form").style.display
+= "block";
+ }
+ function validate(){
+
+ if(blank(document.getElementById("firstname").value
+, document.getElementById("lastname").value ,
+document.getElementById("email").value ,
+document.getElementById("pass").value,
+document.getElementById("confpass").value)==true &&
+
+fname(document.getElementById("firstname").value)==true
+&&
+
+lname(document.getElementById("lastname").value)==true
+&&
+ em(document.getElementById("email").value)==true
+&&
+ confpa(document.getElementById("pass").value,
+document.getElementById("confpass").value) == true){
+ return true;
+ }
+ else{
+ return false;
+ }
+ }
+ function blank(a,b,c,d,e){
+ if(a=="" || b=="" || c=="" || d=="" || e==""){
+ alert("All fields are necessary");
+ return false;
+
+ }
+ return true;
+ }
+ function fname(name){
+ l = name.length;
+ for(i=0;i<l;i++){
+ c= name.charAt(i);
+ if(!((c>='A' && c<='Z') || (c>='a' && c<='z'))){
+ alert("First Name not correct");
+ return false;
+ }
+ else if(l>30){
+ alert("Name too long");
+ return false;
+ }
+ }
+ return true;
+ }
+ function lname(name){
+ l = name.length;
+ for(i=0;i<l;i++){
+ c= name.charAt(i);
+ if(!((c>='A' && c<='Z') || (c>='a' && c<='z'))){
+
+ alert("Last Name not correct");
+ return false;
+ }
+ else if(l>30){
+ alert("Name too long");
+ return false;
+ }
+ }
+ return true;
+ }
+ function em(email){
+ atp = email.indexOf("@");
+ dotp = email.lastIndexOf(".");
+ if(atp<1 || dotp<atp+2 || dotp+2>=email.length){
+ alert("Enter a valid email-ID");
+ return false;
+ }
+ return true;
+ }
+ function confpa(pass1,pass2){
+ if(pass1 != pass2){
+ alert("Passwords doesn't match");
+ return false;
+
+ }
+ return true;
+ }
+ </script>
+</head>
+<body>
+ <div style="background-image: url('../static/dummy/bg.png'); background-repeat: repeat;">
+ <div id="site-content">
+ <br>
+ <div class="container">
+ <a href="Projectpage3.html" id="branding">
+ <div class="logo-copy">
+ <img src="../static/dummy/logo.png" class="logo" height="50px"
+width="100px" float="left"></div>
+ <div class="logo-copy"> <h1 class="site-title">MyChannel</h1>
+ <small class="site-description">Get your
+Favourite Movies and Shows in HD </small>
+ </div>
+ <br>
+ </a>
+</div>
+ <br>
+ <br><br>
+ <h3>
+<strong><p style="color:azure; text-align : center;"> SIGNUP AND LOGIN TO
+GET HIGH DEFINITION QUALITY PREMIUM CONTENT
+NOW. </strong>
+ </h3> 
+ <div class="container">
+ <div class="row justify-content-center">
+ <div class="col-4">
+ <div class="card">
+ <h4 class="card-header text-center">Register</h4>
+ <div class="card-block">
+ <form method="post"
+action="/register" onsubmit="return(validate())">
+{% csrf_token %}
+ <div class="form-group">
+ <label>First Name</label>
+ <input name="first_name" type="text" class="form-control form-control-danger" id="first_name">
+{% if messages %}
+{%for message in messages %}
+{%if "first_name" in message.tags %}
+ <div class="form-group has-danger">
+ <div class="form-control-feedback">{{message}}</div>
+
+ </div>
+ {%endif%} {%endfor%} {% endif %}
+ </div>
+ <div class="form-group">
+ <label>Last Name</label>
+ <input name="last_name"
+type="text" class="form-control" id="last_name">
+{% if messages %}
+{%for message in messages %}
+{%if "last_name" in message.tags %}
+ <div class="form-group has-danger">
+ <div class="form-control-feedback">{{message}}</div>
+ </div>
+ {%endif%} {%endfor%} {% endif %}
+ </div>
+ <div class="form-group">
+ <label>Email</label>
+ <input name="email"
+type="email" class="form-control" id="email">
+{% if messages %}
+{%for message in messages %}
+{%if "email" in message.tags %}
+ <div class="form-group has-danger">
+ <div class="form-control-feedback">{{message}}</div>
+ </div>
+ {%endif%} {%endfor%} {% endif %}
+ </div>
+ <div class="form-group">
+
+ <label>Password</label>
+ <input name="password"
+type="password" class="form-control" id="password">
+ <div class="form-group has-danger">
+   {% if messages %}
+   {%for message in messages %}
+   {%if "password" in message.tags %}
+ <div class="form-control-feedback">{{message}}</div>
+ </div>
+ {%endif%} {%endfor%} {% endif %}
+ </div>
+ <div class="form-group">
+ <label>Confirm Password</label>
+ <input name="confirm_password"
+type="password" class="form-control" id="confirm_password">
+{% if messages %}
+{%for message in messages %}
+{%if "confirm_password" in message.tags %}
+ <div class="form-group has-danger">
+ <div class="form-control-feedback">{{message}}</div>
+ </div>
+ {%endif%} {%endfor%} {% endif %}
+ </div>
+ <div class="mx-auto text-center">
+ <input type="submit"
+value="Create Account" class="btn btn-primary">
+ </div>
+ </form>
+
+ </div>
+ </div>
+ </div>
+ <br><br><br><br><br><br><br><br> -OR-
+ <div class="col-4">
+ <div class="card">
+ <h4 class="card-header textcenter">Login</h4>
+ <div class="card-block">
+ <form method="post" action="/login">
+   {% csrf_token %}
+ <div class="form-group">
+ <label>Email</label>
+ <input name="login_email"
+type="text" class="form-control">
+ </div>
+ <div class="form-group">
+ <label>Password</label>
+ <input name="login_password"
+type="password" class="form-control">
+ </div>
+ <div class="mx-auto text-center">
+ <input type="submit"
+value="Login" class="btn btn-primary">
+ </div>
+
+ </form>
+ <br><br>
+ </div>
+ </div>
+ </div>
+ </div>
+ </div>
+ </div>
+ <footer class="site-footer">
+    <div class="container">
+    <div class="row">
+    <div class="col-md-2">
+    
+    <div class="widget">
+    <h3 class="widget-title">About Us</h3>
+    <p style="background-color:lavender;">Team : Aryan
+    Srivastava </p>
+    </div>
+    </div>
+    <div class="col-md-2">
+    <div class="widget">
+    <h3 class="widget-title">
+    Newsletter</h3>
+    <form action="#" class="subscribeform">
+    <input type="text" placeholder="Email Address">
+    </form>
+    </div>
+    </div>
+    </div>
+    </div>
+    </footer>
+    </div>
+    </div>
+    <script src="../static/js/jquery-1.11.1.min.js"></script>
+    <script src="../static/js/plugins.js"></script>
+    <script src="../static/js/app.js"></script>
+    </body>
+    </html>
